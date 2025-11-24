@@ -1,0 +1,261 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{longtable}
+
+\title{Software Design Document (SDD)\\
+SportHub: Multi-Sport Scores \& Favorites Tracker}
+\author{Team 4: Miguel, Oscar, Florencio, Jesus}
+\date{\today}
+
+\begin{document}
+
+
+\maketitle
+\thispagestyle{empty}
+\newpage
+
+
+\tableofcontents
+\newpage
+
+\section*{Version History}
+\addcontentsline{toc}{section}{Version History}
+\begin{longtable}{|p{0.18\linewidth}|p{0.18\linewidth}|p{0.55\linewidth}|}
+\hline
+\textbf{Version} & \textbf{Date} & \textbf{Description} \\
+\hline
+0.1 & 2024-11-24 & Initial draft for Snapshot 1 \\
+\hline
+% later you can add more rows for 0.2, 0.3, 1.0
+\end{longtable}
+\newpage
+
+
+\section{Introduction}
+
+\subsection{Purpose}
+SportHub is a web application that lets users see sports schedules and follow
+their favorite teams. The goal of this document is to explain how the system is
+designed: what the main parts are, how they connect, and how the website is
+supposed to work. This SDD is used by our group while we build the project and
+by the instructor when reviewing how we planned the system.
+
+\subsection{Intended Audience}
+This document is written for:
+\begin{itemize}
+  \item The CS3338 instructor and teaching assistants who grade the project.
+  \item Our team members who are working on the SportHub code and tests.
+  \item Anyone in the future who might want to understand or extend this project.
+\end{itemize}
+
+\subsection{Overview}
+SportHub focuses on showing game schedules for different sports (for example
+NBA, NFL, soccer and MLB). Fans can create an account, mark teams as favorites,
+and see a personalized list of upcoming games for those teams. An admin user
+can manage teams and games in the database.
+
+The rest of this document describes:
+\begin{itemize}
+  \item The overall system architecture (frontend, backend, database, workflow).
+  \item The user interface and how people move through the pages.
+  \item The basic database design used by the application.
+  \item A glossary of terms and references we used while designing the system.
+\end{itemize}
+
+
+
+\section{System Architecture/
+
+\subsection{High-Level Design}
+SportHub uses a common three-layer web design:
+
+\begin{itemize}
+  \item \textbf{Frontend (client)} – A web interface built as a single-page
+        application (for example using React). It runs in the user's browser
+        and shows the pages like Home, Game Details, Login, and My Favorites.
+        The frontend talks to the backend by sending HTTP requests and
+        receiving JSON data.
+  \item \textbf{Backend API (server)} – A Node.js/Express application that
+        contains the main logic. It exposes REST endpoints such as
+        \texttt{/api/games}, \texttt{/api/teams}, \texttt{/api/auth} and
+        \texttt{/api/favorites}. It checks requests, talks to the database, and
+        sends back responses to the frontend.
+  \item \textbf{Database} – A PostgreSQL database that stores persistent data:
+        users, teams, games, and which teams each fan has favorited.
+\end{itemize}
+
+All of these parts are run as Docker containers and are managed with
+\texttt{docker-compose}. A typical setup includes a \texttt{frontend}
+container, a \texttt{backend} container, a \texttt{db} container, and
+optionally an \texttt{nginx} container used as a reverse proxy.
+
+\subsection{Main Workflow}
+A typical workflow for a fan user looks like this:
+
+\begin{enumerate}
+  \item The user opens the SportHub URL in a browser.  
+        The browser downloads the frontend code.
+  \item The frontend automatically calls the backend endpoint
+        \texttt{/api/games} with a date and sport filter to get the list of
+        games for that day.
+  \item The backend queries the database for games that match the filters and
+        returns them as JSON.
+  \item The frontend displays these games on the Home page as a list of cards.
+  \item If the user wants more features, they click \textbf{Register} and send
+        their email and password to \texttt{/api/auth/register}. The backend
+        creates a new user record in the database.
+  \item When the user logs in, the backend verifies the password and returns a
+        session or token. The frontend stores this so it knows the user is a
+        Fan.
+  \item As a logged-in Fan, the user can click a star icon next to a team to
+        favorite it. The frontend sends a request to \texttt{/api/favorites}
+        to save that team as a favorite for the current user.
+  \item When the Fan visits the \textbf{My Favorites} page, the frontend calls
+        \texttt{/api/favorites/games}. The backend finds all favorite teams for
+        that user, finds games involving those teams, and returns the list.
+  \item The frontend shows a personalized schedule based on those favorite
+        teams.
+\end{enumerate}
+
+\subsection{Site Breakdown}
+The main parts of the SportHub site are:
+
+\begin{itemize}
+  \item \textbf{Home / Schedule Page} – Shows a list of games. Users can choose
+        a sport (All, NBA, NFL, Soccer, etc.) and a date filter. Each game has
+        basic information and a button to view details.
+  \item \textbf{Game Details Page} – Shows more information about a single
+        game, such as teams, league, game time, and location. It may also show
+        a placeholder for scores.
+  \item \textbf{Login / Register Pages} – Simple forms for creating an account
+        and logging in as a Fan.
+  \item \textbf{My Favorites Page} – Visible only to logged-in Fans. Shows the
+        teams they have favorited and a list of upcoming games for those teams.
+  \item \textbf{Admin Area} (simple) – A restricted area for an Admin user to
+        add or edit teams and games.
+\end{itemize}
+
+These pages are connected by a shared navigation bar so users can move between
+them easily.
+
+
+\section{User Interface}
+
+\subsection{Home Page}
+When a user first opens SportHub, they see the Home page.
+
+\begin{itemize}
+  \item At the top there is a small filter area where the user can choose:
+        \begin{itemize}
+          \item The sport (for example All, NBA, NFL, Soccer).
+          \item The date (for example Today or a specific calendar date).
+        \end{itemize}
+  \item Under the filters there is a list of games. Each game card shows:
+        \begin{itemize}
+          \item Home team vs. away team.
+          \item League name.
+          \item Game start time.
+          \item A button or link labeled ``View Details''.
+        \end{itemize}
+  \item If the user is logged in as a Fan, the Home page may also show a star
+        icon next to each team to mark it as a favorite.
+\end{itemize}
+
+\subsection{Game Details Page}
+When the user clicks on a game from the Home page:
+
+\begin{itemize}
+  \item The Game Details page is opened.
+  \item It shows the two teams, the league, the game date and time, and the
+        location of the game.
+  \item If scores are available (even if they are just mock values for the
+        project), they can be shown here as home score and away score.
+  \item A back link or button lets the user return to the previous page.
+\end{itemize}
+
+\subsection{Login and Registration Pages}
+\begin{itemize}
+  \item The \textbf{Login} page has fields for email and password and a button
+        to submit the form. If the credentials are correct, the user becomes
+        a logged-in Fan.
+  \item The \textbf{Register} page lets a new user create an account by
+        entering an email and password. After registration they can log in and
+        start using favorites.
+  \item Error messages are shown for invalid input (for example, missing email
+        or wrong password).
+\end{itemize}
+
+\subsection{My Favorites Page}
+\begin{itemize}
+  \item This page is only available when the user is logged in as a Fan.
+  \item It shows a list of the Fan's favorite teams.
+  \item Below that, it shows upcoming games that involve any of those teams.
+  \item The user can unfavorite a team from this page if they no longer want
+        to follow it.
+\end{itemize}
+
+\subsection{Database Overview}
+The user interface is backed by a simple relational database. The main tables
+are:
+
+\begin{itemize}
+  \item \textbf{Users} – Stores accounts for Fans and Admins.
+        Typical columns: \texttt{id}, \texttt{email}, \texttt{password\_hash},
+        \texttt{role}, \texttt{created\_at}.
+  \item \textbf{Teams} – Stores information about teams.
+        Columns: \texttt{id}, \texttt{name}, \texttt{league}, \texttt{city},
+        \texttt{is\_active}.
+  \item \textbf{Games} – Stores each scheduled game.
+        Columns: \texttt{id}, \texttt{home\_team\_id}, \texttt{away\_team\_id},
+        \texttt{league}, \texttt{game\_date}, \texttt{location},
+        \texttt{home\_score}, \texttt{away\_score}, \texttt{is\_final}.
+  \item \textbf{Favorites} – Links Fans to the teams they follow.
+        Columns: \texttt{id}, \texttt{user\_id}, \texttt{team\_id}.
+\end{itemize}
+
+The backend uses these tables to build the lists shown on the pages. For
+example, the Home page reads rows from the \texttt{Games} and \texttt{Teams}
+tables, and the My Favorites page joins \texttt{Favorites}, \texttt{Users},
+and \texttt{Teams}.
+
+
+\section{Glossary}
+
+\begin{longtable}{|p{0.25\linewidth}|p{0.65\linewidth}|}
+\hline
+\textbf{Term / Acronym} & \textbf{Definition} \\
+\hline
+API & Application Programming Interface. The set of HTTP endpoints the frontend
+uses to talk to the backend. \\
+\hline
+DB & Database. In this project it refers to the PostgreSQL instance. \\
+\hline
+Fan & A registered user who can log in, mark favorite teams, and see a personalized schedule. \\
+\hline
+Guest & A user who is not logged in and can only browse public pages. \\
+\hline
+Admin & A user role with permission to manage teams and games in the system. \\
+\hline
+REST & Representational State Transfer, a common style for web APIs. \\
+\hline
+SPA & Single-Page Application, a web app that loads once and updates content
+dynamically without full page reloads. \\
+\hline
+JSON & JavaScript Object Notation, a text format used to send data between
+frontend and backend. \\
+\hline
+\end{longtable}
+
+
+\section{References}
+
+\begin{itemize}
+  \item React documentation: \url{https://react.dev/}
+  \item Node.js documentation: \url{https://nodejs.org/en/docs}
+  \item Express.js documentation: \url{https://expressjs.com/}
+  \item PostgreSQL documentation: \url{https://www.postgresql.org/docs/}
+  \item Docker documentation: \url{https://docs.docker.com/}
+\end{itemize}
+
+\end{document}
