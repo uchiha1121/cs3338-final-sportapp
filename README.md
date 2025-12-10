@@ -53,6 +53,14 @@ The project is organized into four snapshots:
 3. **Snapshot 3 – Checkpoint 2:** filters and multi-sport support, more tests and docs.
 4. **Snapshot 4 – Final:** polishing, final documentation, and future work.
 
+
+### Jira
+
+Sprint board for SportHub:
+
+https://calstatela-team4.atlassian.net/jira/software/projects/ST/boards/68?sprintStarted=true
+
+
 ## Team 4
 
 - **Miguel** – SDD lead, Jira setup  
