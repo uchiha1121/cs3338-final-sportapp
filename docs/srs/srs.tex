@@ -68,7 +68,7 @@
 \hline
 \textbf{Version} & \textbf{Date} & \textbf{Author} & \textbf{Description} \\
 \hline
-1.0 & 2025-11-24 & Oscar Herrera & Initial SRS for Snapshot 1 (Start) \\
+0.1 & 2024-11-24 & Oscar Herrera & Initial SRS for Snapshot 1 (Start) \\
 \hline
 \end{longtable}
 
@@ -149,7 +149,7 @@ SportHub is a new, standalone web application. It follows a typical three-tier a
 \begin{itemize}
     \item \textbf{Frontend:} React-based single-page application providing the user interface.
     \item \textbf{Backend:} Node.js/Express server exposing RESTful endpoints.
-    \item \textbf{Database:} MongoDB for storing users, teams, and game schedules.
+    \item \textbf{Database:} PostgreSQL for storing users, teams, favorites, and game schedules.
 \end{itemize}
 
 Services are orchestrated with Docker Compose to simplify local deployment and eventual hosting. External sports data APIs may be integrated in future snapshots, but Snapshot 1 may rely on dummy or seeded data.
@@ -177,7 +177,7 @@ At a high level, SportHub will provide the following functionality:
 \begin{itemize}
     \item \textbf{Client:} Modern web browser (Chrome, Firefox, Edge, Safari) with JavaScript enabled.
     \item \textbf{Server:} Node.js runtime running in a Linux-based environment (e.g., via Docker container).
-    \item \textbf{Database:} MongoDB (containerized).
+    \item \textbf{Database:} PostgreSQL (containerized).
     \item \textbf{Deployment:} Docker Compose, with potential hosting on a cloud VM (e.g., AWS EC2) or institutional server.
     \item \textbf{Documentation tools:} LaTeX for all project documents compiled into PDF.
 \end{itemize}
@@ -187,7 +187,7 @@ At a high level, SportHub will provide the following functionality:
     \item The project must use GitHub for version control and store all documentation in the repository.
     \item Core documents (SRS, SDD, User Manual, Design Spec, Snapshot Objectives) must be authored in \texttt{.tex} files.
     \item The system must be containerized using Docker and \texttt{docker-compose.yml}.
-    \item React should be used on the frontend; Node.js/Express on the backend; MongoDB for persistence.
+    \item React should be used on the frontend; Node.js/Express on the backend; PostgreSQL for persistence.
     \item Jira and TestRail must be incorporated into the workflow as specified by the course.
 \end{itemize}
 
@@ -265,26 +265,29 @@ Representative endpoints (names and details may evolve):
     \end{itemize}
     \item \textbf{Users \& Favorites}
     \begin{itemize}
-        \item \texttt{POST /api/users/register} \\
+        \item \texttt{POST /api/auth/register} \\
               Registers a new user.
-        \item \texttt{POST /api/users/login} \\
+        \item \texttt{POST /api/auth/login} \\
               Authenticates a user and returns a session token or cookie.
-        \item \texttt{GET /api/users/me/favorites} \\
+        \item \texttt{GET /api/favorites} \\
               Returns the list of favorite teams for the logged-in user.
-        \item \texttt{POST /api/users/me/favorites} \\
+        \item \texttt{GET /api/favorites/games} \\
+              Returns upcoming games that involve the user's favorite teams.
+        \item \texttt{POST /api/favorites} \\
               Adds a team to the user's favorites.
-        \item \texttt{DELETE /api/users/me/favorites/:teamId} \\
+        \item \texttt{DELETE /api/favorites/:teamId} \\
               Removes a team from favorites.
     \end{itemize}
 \end{itemize}
 
 \subsubsection{Database Interface}
-The backend will interact with MongoDB using Mongoose or a similar ODM. Primary collections include:
+The backend will interact with PostgreSQL using an ORM (e.g., Prisma/Sequelize). Primary tables include:
 
 \begin{itemize}
-    \item \texttt{users}: user credentials, profile data, and favorite teams.
+    \item \texttt{users}: user credentials, profile data, and role (fan/admin).
     \item \texttt{teams}: team name, sport, and optionally logo/metadata.
-    \item \texttt{games}: participating teams, sport, date/time, and scores.
+    \item \texttt{games}: participating teams, sport, date/time, location, and scores.
+    \item \texttt{favorites}: junction table connecting users to teams.
 \end{itemize}
 
 \subsection{Communications Interfaces}

@@ -65,7 +65,7 @@ The rest of this document describes:
 
 
 
-\section{System Architecture/}
+\section{System Architecture}
 
 \subsection{High-Level Design}
 SportHub uses a common three-layer web design:
@@ -78,11 +78,14 @@ SportHub uses a common three-layer web design:
         receiving JSON data.
   \item \textbf{Backend API (server)} – A Node.js/Express application that
         contains the main logic. It exposes REST endpoints such as
-        \texttt{/api/games}, \texttt{/api/teams}, \texttt{/api/auth} and
-        \texttt{/api/favorites}. It checks requests, talks to the database, and
-        sends back responses to the frontend.
+        \texttt{/api/games}, \texttt{/api/teams}, \texttt{/api/auth/register},
+        \texttt{/api/auth/login}, \texttt{/api/favorites},
+        \texttt{/api/favorites/:teamId}, and \texttt{/api/favorites/games}.
+        It checks requests, talks to the database, and sends back responses to
+        the frontend.
   \item \textbf{Database} – A PostgreSQL database that stores persistent data:
-        users, teams, games, and which teams each fan has favorited.
+        users, teams, games, and which teams each fan has favorited via a
+        \texttt{favorites} junction table.
 \end{itemize}
 
 All of these parts are run as Docker containers and are managed with
@@ -125,6 +128,8 @@ The main parts of the SportHub site are:
   \item \textbf{Home / Schedule Page} – Shows a list of games. Users can choose
         a sport (All, NBA, NFL, Soccer, etc.) and a date filter. Each game has
         basic information and a button to view details.
+  \item \textbf{Teams Page} – Lists teams by sport, shows basic info, and lets
+        logged-in Fans add or remove a team from their favorites.
   \item \textbf{Game Details Page} – Shows more information about a single
         game, such as teams, league, game time, and location. It may also show
         a placeholder for scores.
@@ -174,14 +179,22 @@ When the user clicks on a game from the Home page:
   \item A back link or button lets the user return to the previous page.
 \end{itemize}
 
+\subsection{Teams Page}
+\begin{itemize}
+  \item Shows teams grouped by sport with name and optional logo.
+  \item Logged-in Fans can click to add or remove a team from their favorites
+        (using \texttt{/api/favorites} requests).
+  \item Provides a quick way to build the My Favorites list.
+\end{itemize}
+
 \subsection{Login and Registration Pages}
 \begin{itemize}
   \item The \textbf{Login} page has fields for email and password and a button
         to submit the form. If the credentials are correct, the user becomes
-        a logged-in Fan.
+        a logged-in Fan (calling \texttt{/api/auth/login}).
   \item The \textbf{Register} page lets a new user create an account by
-        entering an email and password. After registration they can log in and
-        start using favorites.
+        entering an email and password (calling \texttt{/api/auth/register}).
+        After registration they can log in and start using favorites.
   \item Error messages are shown for invalid input (for example, missing email
         or wrong password).
 \end{itemize}
