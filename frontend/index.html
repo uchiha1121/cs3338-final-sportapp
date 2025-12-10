@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SportHub – All Games</title>
+</head>
+<body>
+  <h1>SportHub – All Games</h1>
+
+  <label for="sportFilter">Filter by sport:</label>
+  <select id="sportFilter">
+    <option value="all">All</option>
+    <option value="NBA">NBA</option>
+    <option value="NFL">NFL</option>
+    <option value="MLB">MLB</option>
+    <option value="MLB">SOCCER</option>
+  </select>
+
+  <table border="1" cellpadding="6" cellspacing="0" style="margin-top: 10px;">
+    <thead>
+      <tr>
+        <th>Sport</th>
+        <th>Home</th>
+        <th>Away</th>
+        <th>Date</th>
+        <th>Time</th>
+      </tr>
+    </thead>
+    <tbody id="gamesTableBody">
+      <!-- rows will be added by script.js -->
+    </tbody>
+  </table>
+
+  <script src="script.js"></script>
+</body>
+</html>
