@@ -1,0 +1,55 @@
+version: "3.9"
+
+services:
+  # Database service (PostgreSQL)
+  db:
+    image: postgres:15
+    container_name: sporthub-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: sporthub
+      POSTGRES_USER: sporthub_user
+      POSTGRES_PASSWORD: sporthub_password
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  # Backend service (Node.js + Express)
+  backend:
+    image: node:20
+    container_name: sporthub-backend
+    working_dir: /app
+    volumes:
+      - ./backend:/app
+    command: sh -c "npm install && npm start"
+    environment:
+      PORT: 4000
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: sporthub_user
+      DB_PASSWORD: sporthub_password
+      DB_NAME: sporthub
+    depends_on:
+      - db
+    ports:
+      - "4000:4000"
+
+  # Frontend service (React)
+  frontend:
+    image: node:20
+    container_name: sporthub-frontend
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+    command: sh -c "npm install && npm start"
+    environment:
+      PORT: 3000
+      REACT_APP_API_BASE_URL: http://localhost:4000
+    depends_on:
+      - backend
+    ports:
+      - "3000:3000"
+
+volumes:
+  db_data:
