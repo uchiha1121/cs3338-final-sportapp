@@ -1,0 +1,112 @@
+\documentclass[12pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{setspace}
+\usepackage{hyperref}
+
+\title{Snapshot Objectives\\[0.5em]
+SportHub – Multi-Sport Scores \& Favorites Tracker}
+\author{Team 4: Miguel, Oscar, Florencio, Jesus}
+\date{Fall 2025 – CS3338}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Start Objective (Snapshot 1)}
+
+\subsection{Goals at the Start of the Project}
+At the start of the project, the main goal for SportHub was to set up the
+foundations of the system and the toolchain required by CS3338. More
+specifically, our objectives were:
+
+\begin{itemize}
+    \item Define the basic idea for SportHub: a multi-sport web app that shows schedules and allows users to track favorite teams.
+    \item Set up the GitHub repository and agree on the initial folder structure for frontend, backend, and documentation.
+    \item Create the first version of the core documents (SRS, SDD, User Manual, Design Spec, Snapshot Objectives) in \texttt{.tex} format.
+    \item Build a simple All Games schedule view using mock or seeded data served from the backend.
+    \item Scaffold our tooling: connect Jira, create the first sprint/epics, and prepare TestRail and Docker for later snapshots.
+\end{itemize}
+
+\subsection{Reflection}
+By the end of Snapshot~1 we had a clear project direction and the basic
+architecture in place (React frontend, Node/Express backend, PostgreSQL DB, and
+Docker). The schedule view was simple but working with mock data, and the main
+documents existed in draft form. This gave us a good starting point to add more
+features in later snapshots.
+
+\newpage
+
+\section{1st Checkpoint Objective (Snapshot 2)}
+
+\subsection{Goals for Snapshot 2}
+The focus for Snapshot~2 was to move beyond a static prototype and make the
+schedule view more useful and realistic. Our main objectives were:
+
+\begin{itemize}
+    \item Wire the All Games schedule view to the backend API instead of hardcoded data.
+    \item Implement sport and date filters so users can narrow down the list of games.
+    \item Stabilize the Docker Compose setup so frontend and backend can be started together.
+    \item Create and run initial TestRail test runs for the schedule and filters.
+    \item Update SRS, SDD, User Manual, and Design Spec to match the schedule/filter functionality delivered.
+\end{itemize}
+
+\subsection{Reflection}
+By the end of Snapshot~2, the schedule view felt more like a real application.
+Filters were working, and we had a smoother local setup thanks to Docker
+Compose. TestRail had its first test run covering basic game retrieval and
+filter behavior. Some features (like favorites and admin tools) were still
+planned but not implemented yet, which became the focus for Snapshot~3.
+
+\newpage
+
+\section{2nd Checkpoint Objective (Snapshot 3)}
+
+\subsection{Goals for Snapshot 3}
+The main objective for Snapshot~3 was to introduce the Favorites flow and begin
+personalizing the experience for fans. Our goals were:
+
+\begin{itemize}
+    \item Add a Favorites UI on the All Games or Teams page (star/toggle) to let fans select favorite teams.
+    \item Implement a \textbf{My Favorites} page where users can see upcoming games for their favorite teams.
+    \item Design and partially implement favorites-related API endpoints
+          (e.g., \texttt{/api/favorites}, \texttt{/api/favorites/games}).
+    \item Extend TestRail test cases to cover adding/removing favorites and viewing My Favorites.
+    \item Update SRS, SDD, User Manual, and Design Spec to describe the Favorites feature and new pages.
+\end{itemize}
+
+\subsection{Reflection}
+Snapshot~3 shifted SportHub from just a schedule viewer into something more
+personalized. Even if some favorites logic was still stored on the frontend
+temporarily, the UI and flow were in place. We captured these changes in the
+documents and TestRail. The remaining work for the final snapshot focused on
+polishing, closing gaps, and making the overall system feel complete.
+
+\newpage
+
+\section{Due Date Checkpoint (Snapshot 4 – Final)}
+
+\subsection{Goals for the Final Snapshot}
+The last snapshot focused on polishing, documentation, and final verification.
+Our main objectives were:
+
+\begin{itemize}
+    \item Finalize the Favorites flow and My Favorites page so they behave consistently with the design.
+    \item Clean up navigation and filters so the main pages feel unified and easy to use.
+    \item Ensure that Docker Compose can start the system with one command and that the basic paths work as expected.
+    \item Run final TestRail test runs for the completed features (schedule, filters, favorites) and export reports.
+    \item Bring all documents (SRS, SDD, User Manual, Design Spec, Snapshot Objectives) up to date with the final implementation.
+\end{itemize}
+
+\subsection{Reflection and Future Work}
+By the due date, SportHub met the main goals of the project: a multi-sport
+schedule viewer with filters, favorites, and a clear architecture supported by
+Jira, TestRail, Docker, and LaTeX documentation. There are still many possible
+extensions, such as live scores from external APIs, richer statistics, better
+mobile responsiveness, and notifications for upcoming games. However, the
+current version provides a solid foundation that demonstrates the intended
+software engineering skills for CS3338.
+
+\end{document}
