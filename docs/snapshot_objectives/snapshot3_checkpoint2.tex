@@ -1,25 +1,67 @@
-\documentclass[12pt]{article}
-\usepackage[margin=1in]{geometry}
+\section*{Snapshot 3 -- Checkpoint 2}
 
-\begin{document}
+\subsection*{Objective}
 
-\section*{Snapshot 3 – Checkpoint 2 Objective}
+The main objective for Snapshot 3 is to add a Favorites feature to
+SportHub so that fan users can mark interesting games and then see them
+on a dedicated ``My Favorites'' page. This snapshot focuses on basic
+frontend behavior and planning the backend support, not on a full
+production database implementation.
 
-For Snapshot 3, our goal is to add the second large feature:
-favorites and the “My Favorites” page.
+\subsection*{Planned Work}
 
-\subsection*{Goals}
+For Snapshot 3 we plan to:
+
 \begin{itemize}
-  \item Allow the user to mark or unmark a game as a favorite
-        from the games list.
-  \item Create a “My Favorites” page that shows only favorited games.
-  \item Add backend endpoints and database support for storing favorites.
-  \item Update SDD, SRS, user manual, and design spec to include
-        the favorites feature and page.
-  \item Add TestRail cases for adding/removing favorites and viewing
-        the favorites list.
-  \item Update the workflow diagram to show how favorites data flows
-        between frontend, backend, and database.
+  \item Extend the All Games page so each game has a ``Favorite'' icon
+        or button the user can click.
+  \item Create a simple ``My Favorites'' page that lists only the games
+        the current user has marked as favorites.
+  \item Store favorites on the frontend (for example, using browser
+        storage or an in-memory list) while we design the real backend
+        API and database tables.
+  \item Add new Jira stories and tasks for the Favorites feature,
+        including UI, backend design, and test work.
+  \item Create new TestRail test cases and a Snapshot 3 report that
+        cover marking a game as favorite, viewing favorites, and
+        removing a game from favorites.
+  \item Update the SRS, SDD, Design Spec, and User Manual to describe
+        the Favorites feature and the My Favorites page.
+  \item Update the workflow diagram to show the flow for adding and
+        viewing favorites.
 \end{itemize}
 
-\end{document}
+\subsection*{Completed Work (by the end of Snapshot 3)}
+
+By the end of Snapshot 3 we expect to have:
+
+\begin{itemize}
+  \item A working prototype of the Favorites button on the All Games
+        page that visually marks games as favorited.
+  \item A simple My Favorites page that shows the subset of games the
+        user has favorited (even if this is based on mock data or
+        temporary frontend storage).
+  \item New Jira issues created and updated for the Favorites feature,
+        including at least one story and several tasks.
+  \item A TestRail run and PDF report for Snapshot 3 that documents
+        manual tests for the Favorites workflow.
+  \item All major documents (SRS, SDD, Design Spec, User Manual)
+        updated with short sections describing how Favorites should
+        work in the final system.
+\end{itemize}
+
+\subsection*{Next Steps After Snapshot 3}
+
+After Snapshot 3 the next steps will be:
+
+\begin{itemize}
+  \item Connect the Favorites feature to a real backend API and
+        database tables so favorites persist across browser sessions.
+  \item Add basic authentication so favorites can be tied to a specific
+        logged-in user account.
+  \item Improve the UI/UX of the My Favorites page (sorting, filtering,
+        removing favorites).
+  \item Expand TestRail coverage for error handling and edge cases and
+        prepare the final Snapshot 4 deliverables and reflection.
+\end{itemize}
+
