@@ -10,11 +10,9 @@ SportHub: Multi-Sport Scores \& Favorites Tracker}
 
 \begin{document}
 
-
 \maketitle
 \thispagestyle{empty}
 \newpage
-
 
 \tableofcontents
 \newpage
@@ -25,14 +23,16 @@ SportHub: Multi-Sport Scores \& Favorites Tracker}
 \hline
 \textbf{Version} & \textbf{Date} & \textbf{Description} \\
 \hline
-0.1 & 2024-11-24 & Initial draft for Snapshot 1 \\
+0.1 & 2024-11-24 & Snapshot 1: Initial draft and base architecture (core pages and workflow). \\
 \hline
-0.2 & 2025-12-10 & Snapshot 3: Favorites flow design, API planning, updated UI notes \\
+0.2 & 2024-12-05 & Snapshot 2: Schedule view and filters using mock data; defined core REST endpoints and initial Docker layout. \\
 \hline
-
+0.3 & 2025-12-10 & Snapshot 3: Favorites flow design, API planning, updated UI notes. \\
+\hline
+1.0 & 2025-12-11 & Snapshot 4: Final version; polished favorites and filters, updated containers and documentation. \\
+\hline
 \end{longtable}
 \newpage
-
 
 \section{Introduction}
 
@@ -65,8 +65,6 @@ The rest of this document describes:
   \item A glossary of terms and references we used while designing the system.
 \end{itemize}
 
-
-
 \section{System Architecture}
 
 \subsection{High-Level Design}
@@ -88,10 +86,10 @@ SportHub uses a common three-layer web design:
   \item \textbf{Database} – A PostgreSQL database that stores persistent data:
         users, teams, games, and which teams each fan has favorited via a
         \texttt{favorites} junction table.
-  \item \textbf{Runtime stack (current snapshot)} – Node.js 20 with Express
-        and CORS middleware for the mock API, plus nginx to serve the static
-        frontend container. Favorites persist locally until database wiring is
-        completed.
+  \item \textbf{Runtime stack} – Node.js 20 with Express
+        and CORS middleware for the API, plus nginx to serve the static
+        frontend container. During development, favorites may persist locally
+        until database wiring is completed.
 \end{itemize}
 
 All of these parts are run as Docker containers and are managed with
@@ -127,6 +125,14 @@ A typical workflow for a fan user looks like this:
         teams.
 \end{enumerate}
 
+\subsection{Snapshot 2 Implementation Notes}
+\begin{itemize}
+  \item Implemented the initial All Games / schedule view using mock data served by the Express backend.
+  \item Added basic sport and date filters on the Home page so users can narrow down the schedule.
+  \item Defined the core REST endpoints for games (\texttt{/api/games}) and teams (\texttt{/api/teams}).
+  \item Created the first Docker setup with separate frontend and backend services.
+\end{itemize}
+
 \subsection{Snapshot 3 Implementation Notes}
 \begin{itemize}
   \item Favorites UI added to the All Games page (star/button toggle) with a
@@ -140,6 +146,14 @@ A typical workflow for a fan user looks like this:
         and \texttt{docker/Dockerfile.backend}.
   \item TestRail coverage expanded to include favorite/unfavorite and viewing
         the favorites list; results will be tracked in the Snapshot 3 report.
+\end{itemize}
+
+\subsection{Snapshot 4 Final Notes}
+\begin{itemize}
+  \item Polished navigation and styling so that all pages share the same layout and header.
+  \item Verified the favorites flow (add/remove favorites, view My Favorites) and updated TestRail coverage for the final run.
+  \item Finalized the Docker configuration so frontend and backend can be started together via \texttt{docker-compose}.
+  \item Updated all project documents (SDD, SRS, user manual, design spec, snapshot objectives) to match the final system.
 \end{itemize}
 
 \subsection{Site Breakdown}
@@ -164,7 +178,6 @@ The main parts of the SportHub site are:
 
 These pages are connected by a shared navigation bar so users can move between
 them easily.
-
 
 \section{User Interface}
 
@@ -253,7 +266,6 @@ example, the Home page reads rows from the \texttt{Games} and \texttt{Teams}
 tables, and the My Favorites page joins \texttt{Favorites}, \texttt{Users},
 and \texttt{Teams}.
 
-
 \section{Glossary}
 
 \begin{longtable}{|p{0.25\linewidth}|p{0.65\linewidth}|}
@@ -281,7 +293,6 @@ frontend and backend. \\
 \hline
 \end{longtable}
 
-
 \section{References}
 
 \begin{itemize}
@@ -293,4 +304,3 @@ frontend and backend. \\
 \end{itemize}
 
 \end{document}
-
