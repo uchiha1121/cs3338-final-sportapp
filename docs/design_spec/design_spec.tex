@@ -3,21 +3,56 @@
 
 \begin{document}
 
-\section*{Design Specification – SportHub}
+\section*{Design Specification -- SportHub}
 
 \section{Overview}
 SportHub is a web application that lets users view upcoming games for
-multiple sports and keep a personal list of favorite games. This document
-describes the planned screens and main UI elements.
+multiple sports and keep a personal list of \textbf{favorite teams}.
+From those favorite teams, SportHub builds a personalized list of
+upcoming games. This document describes the planned screens, main UI
+elements, and shared components of the system.
+
+The goal of this design specification is to give a clear breakdown of
+\textbf{every page and major part} of the SportHub user interface so
+that developers can implement it consistently and the instructor can
+see how the project is organized.
 
 \section{Global Layout}
-All pages share:
+All pages share a consistent layout:
+
 \begin{itemize}
   \item A top navigation bar with links:
-        \textbf{SportHub}, \textbf{All Games}, \textbf{My Favorites},
-        and (later) \textbf{Admin}.
-  \item A consistent color theme and typography.
-  \item A footer with basic information about the team or course.
+        \textbf{SportHub} (Home), \textbf{All Games}, \textbf{Teams},
+        \textbf{My Favorites} (for logged-in users), and
+        \textbf{Admin} (for admin users).
+  \item A main content area in the center of the page where each view
+        displays its specific content.
+  \item A footer with basic information about the team, course, and
+        a brief note about the project.
+  \item A consistent color theme and typography across all pages.
+\end{itemize}
+
+\section{Home Page}
+\subsection*{Purpose}
+Serve as the landing page for SportHub and give users a quick overview
+of what the site does, along with shortcuts to the main features.
+
+\subsection*{Main Elements}
+\begin{itemize}
+  \item \textbf{Page header} with the SportHub logo and tagline
+        (for example, ``Multi-Sport Scores \& Favorites Tracker'').
+  \item \textbf{Introductory text} briefly explaining that users can
+        browse games, mark favorite teams, and view personalized
+        schedules.
+  \item \textbf{Quick links or cards} that navigate to:
+        \begin{itemize}
+          \item \textbf{All Games} -- browse all upcoming games.
+          \item \textbf{Teams} -- choose favorite teams.
+          \item \textbf{My Favorites} -- view games for favorite teams
+                (visible only when logged in).
+        \end{itemize}
+  \item \textbf{Optional highlights}, such as a small list of games
+        happening today or this week.
 \end{itemize}
 
 \section{All Games Page}
@@ -29,40 +64,233 @@ across different sports.
 \begin{itemize}
   \item \textbf{Filters area} at the top:
         \begin{itemize}
-          \item Dropdown to select a sport (e.g., NBA, NFL, MLB).
-          \item Date picker or simple date filter (e.g., Today, This Week).
+          \item Dropdown to select a sport (e.g., All, NBA, NFL, MLB,
+                Soccer).
+          \item Date picker or simple date filter
+                (e.g., Today, This Week, Custom Date).
         \end{itemize}
-  \item \textbf{Games list} in the middle of the page:
+  \item \textbf{Games list} in the main content area:
         \begin{itemize}
-          \item Each row/card shows sport, teams, date, time, and status.
-          \item A favorite icon/button that the user can click to add or
-                remove the game from favorites.
+          \item Each row or card shows the sport, home team, away
+                team, date, time, and game status (e.g., Upcoming,
+                Final, In Progress).
+          \item A \textbf{details button/link} that navigates to the
+                Game Details page for that game.
+          \item If desired, a small indicator when either team is one
+                of the user's favorite teams.
+        \end{itemize}
+  \item \textbf{Empty state message} displayed when no games match the
+        selected filters (for example, ``No games available for this
+        date and sport.'').
+\end{itemize}
+
+\section{Teams Page}
+\subsection*{Purpose}
+Allow users to browse teams by sport and choose which teams to follow
+as favorites.
+
+\subsection*{Main Elements}
+\begin{itemize}
+  \item \textbf{Sport filter} at the top (tabs or dropdown) so users
+        can pick a league such as NBA, NFL, Soccer, or MLB.
+  \item \textbf{Team list or grid}:
+        \begin{itemize}
+          \item Each team card shows the team name, sport, and
+                optionally a logo or city.
+          \item For logged-in users, a \textbf{favorite star or toggle}
+                to add or remove the team from their favorites.
+          \item For guests (not logged in), the favorite control may
+                be shown but disabled, with a small message such as
+                ``Log in to save favorites.''
+        \end{itemize}
+  \item \textbf{Feedback messages} when a team is added to or removed
+        from favorites.
+\end{itemize}
+
+\section{Game Details Page}
+\subsection*{Purpose}
+Show detailed information about a single game selected from the All
+Games or My Favorites pages.
+
+\subsection*{Main Elements}
+\begin{itemize}
+  \item \textbf{Game header} with the league/sport and
+        \texttt{Home Team vs.\ Away Team}.
+  \item \textbf{Details section} including:
+        \begin{itemize}
+          \item Game date and time.
+          \item Location or venue.
+          \item Status (Upcoming, Final, etc.).
+          \item Scores if available (otherwise labels such as
+                ``TBD'' or ``--'').
+        \end{itemize}
+  \item \textbf{Navigation controls}:
+        \begin{itemize}
+          \item A back button or link to return to the previous list.
+          \item Optional quick links back to All Games or My Favorites.
         \end{itemize}
 \end{itemize}
 
 \section{My Favorites Page}
 \subsection*{Purpose}
-Allow the user to focus only on games they care about most.
+Allow the user to focus only on games involving the teams they care
+about most.
 
 \subsection*{Main Elements}
 \begin{itemize}
   \item Page title: \textbf{My Favorites}.
-  \item Short description explaining that only favorited games appear here.
-  \item List of favorite games with the same layout as the All Games page.
-  \item Ability to unfavorite a game, which removes it from this list.
+  \item Short description explaining that this page shows upcoming
+        games for the user's favorite teams.
+  \item \textbf{Favorite teams summary} (optional) at the top,
+        listing the names and sports of the teams the user follows.
+  \item \textbf{Upcoming games list} that uses the same layout as the
+        All Games page but filtered to only games involving favorite
+        teams.
+  \item \textbf{Unfavorite controls} so the user can remove a team
+        from their favorites, which will eventually remove its games
+        from the list.
+  \item When the user has no favorite teams, an \textbf{empty state
+        message}, such as ``You have no favorite teams yet. Go to the
+        Teams page to add some.''
 \end{itemize}
 
-\section{Admin Page (Planned for Later Snapshot)}
+\section{Login Page}
 \subsection*{Purpose}
-Give project members a way to manage the list of games without directly
-editing the database.
+Allow existing users to sign in and access personalized features such
+as My Favorites.
 
 \subsection*{Main Elements}
 \begin{itemize}
-  \item Table showing existing games with Edit and Delete actions.
-  \item Form for adding or editing a game with fields:
-        sport, home team, away team, date, time, and optional status.
-  \item Save / Cancel buttons for the form.
+  \item Page title: \textbf{Login}.
+  \item \textbf{Form fields}:
+        \begin{itemize}
+          \item Email or username input.
+          \item Password input.
+        \end{itemize}
+  \item \textbf{Buttons and links}:
+        \begin{itemize}
+          \item Login/Submit button.
+          \item Link to the Register page for new users.
+        \end{itemize}
+  \item \textbf{Error and success messages}:
+        \begin{itemize}
+          \item Clear messages for invalid credentials or missing
+                fields.
+        \end{itemize}
+\end{itemize}
+
+\section{Register Page}
+\subsection*{Purpose}
+Allow new users to create a SportHub account so they can maintain a
+list of favorite teams and personalize their experience.
+
+\subsection*{Main Elements}
+\begin{itemize}
+  \item Page title: \textbf{Register} or \textbf{Create Account}.
+  \item \textbf{Form fields}:
+        \begin{itemize}
+          \item Email or username.
+          \item Password.
+          \item Confirm password.
+        \end{itemize}
+  \item \textbf{Buttons and links}:
+        \begin{itemize}
+          \item Register/Sign Up button.
+          \item Link back to the Login page.
+        \end{itemize}
+  \item \textbf{Validation messages}:
+        \begin{itemize}
+          \item Password mismatch errors.
+          \item Missing required field warnings.
+        \end{itemize}
+\end{itemize}
+
+\section{Admin Pages}
+\subsection*{Purpose}
+Give authorized project members (admins) a way to manage teams and
+games without directly editing the database.
+
+\subsection*{Admin -- Teams Management}
+\subsection*{Main Elements}
+\begin{itemize}
+  \item \textbf{Teams table} listing existing teams with columns such
+        as team name, sport, and status (active/inactive).
+  \item \textbf{Actions} for each row:
+        \begin{itemize}
+          \item Edit button to open a form for updating a team.
+          \item Delete button (with confirmation) to remove a team.
+        \end{itemize}
+  \item \textbf{Add Team form} with fields:
+        \begin{itemize}
+          \item Team name.
+          \item Sport (dropdown).
+          \item Optional city/logo URL.
+        \end{itemize}
+  \item \textbf{Save} and \textbf{Cancel} buttons for the form.
+\end{itemize}
+
+\subsection*{Admin -- Games Management}
+\subsection*{Main Elements}
+\begin{itemize}
+  \item \textbf{Games table} with columns such as sport, home team,
+        away team, date, time, location, and status.
+  \item \textbf{Actions} for each game:
+        \begin{itemize}
+          \item Edit button to update date, time, location, or status.
+          \item Delete button (with confirmation) to remove the game.
+        \end{itemize}
+  \item \textbf{Add Game form} with fields:
+        \begin{itemize}
+          \item Sport.
+          \item Home team (selected from existing teams).
+          \item Away team (selected from existing teams).
+          \item Date and time.
+          \item Location.
+          \item Optional status or score fields.
+        \end{itemize}
+  \item \textbf{Save} and \textbf{Cancel} buttons for the form.
+\end{itemize}
+
+\section{Shared Components and Tools}
+\subsection*{Navigation Bar}
+\begin{itemize}
+  \item Always visible at the top of the page.
+  \item Links:
+        \begin{itemize}
+          \item SportHub logo (navigates to Home).
+          \item All Games.
+          \item Teams.
+          \item My Favorites (visible only for logged-in users).
+          \item Admin (visible only for admin users).
+          \item Login or Logout button depending on authentication state.
+        \end{itemize}
+\end{itemize}
+
+\subsection*{Game Card Component}
+\begin{itemize}
+  \item Reusable layout used on All Games and My Favorites pages.
+  \item Displays sport, teams, date/time, and game status.
+  \item Contains a button or link to view full details.
+  \item May show a small icon if the user follows one or both teams.
+\end{itemize}
+
+\subsection*{Team Card Component}
+\begin{itemize}
+  \item Used on the Teams page.
+  \item Shows team name, sport, and optional logo/city.
+  \item Provides a favorite star or toggle when the user is logged in.
+\end{itemize}
+
+\subsection*{Empty State Messages}
+\begin{itemize}
+  \item Standard messages for when lists have no content, such as:
+        \begin{itemize}
+          \item ``No games available for this selection.''
+          \item ``You have no favorite teams yet.''
+          \item ``No teams found for this sport.''
+        \end{itemize}
+  \item These help guide users toward the next step (e.g., going to the
+        Teams page to add favorites).
 \end{itemize}
 
 \end{document}
