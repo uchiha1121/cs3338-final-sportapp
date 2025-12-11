@@ -11,6 +11,15 @@ CS3338 Final Project – **SportHub**, a multi-sport scores & favorites tracker.
 - Semester: **Fall 2025**
 - Team: **Team 4**
 
+- Team 4
+Miguel – SDD Lead, Jira Setup
+
+Oscar – SRS Lead, Backend Structure
+
+Florencio – User Manual & Frontend UI
+
+Jesus – Design Spec & TestRail
+
 ---
 
 ## Jira & TestRail Links
@@ -124,3 +133,5 @@ SportHub:
    ```bash
    git clone https://github.com/uchiha1121/cs3338-final-sportapp.git
    cd cs3338-final-sportapp
+
+
