@@ -2,140 +2,304 @@
 \usepackage[margin=1in]{geometry}
 \usepackage{hyperref}
 
+\title{SportHub User Manual}
+\author{Team 4}
+\date{\today}
+
 \begin{document}
 
-\section*{SportHub User Manual}
+\maketitle
+\thispagestyle{empty}
+\newpage
+
+\tableofcontents
+\newpage
 
 \section{Introduction}
 
+\subsection{What is SportHub?}
 SportHub is a web application that lets users view upcoming games for
-multiple sports and keep a personal list of favorite games. The main users
-are sports fans who want one place to quickly see games and track their
-favorites.
+multiple sports and keep a personal list of \textbf{favorite teams}.
+From those favorite teams, SportHub builds a personalized list of
+upcoming games. The main users are sports fans who want one place to
+quickly see schedules and focus on the teams they care about most.
 
-This manual explains the goals of SportHub, why the software matters, and
-how to access and use it during development.
+This manual explains:
+\begin{itemize}
+  \item The goals of SportHub and why the software matters.
+  \item How to access SportHub from GitHub / Docker.
+  \item How to navigate the main pages and use key features.
+\end{itemize}
+
+\subsection{Who is this manual for?}
+This manual is intended for:
+\begin{itemize}
+  \item Sports fans using SportHub to view games and favorite teams.
+  \item The CS3338 instructor and TAs who need to run and test the system.
+  \item Team members and future developers who want a quick guide to the UI.
+\end{itemize}
 
 \section{Objectives of SportHub}
 
+The main objectives of SportHub are:
 \begin{itemize}
-  \item Show a list of upcoming games for different sports (NBA, NFL, MLB, etc.).
+  \item Show a list of upcoming (and recent) games for different sports
+        (NBA, NFL, Soccer, MLB, etc.).
   \item Allow the user to filter games by sport and date.
-  \item Allow the user to mark games as favorites and view a ``My Favorites''
-        list (planned for later snapshots).
-  \item Provide a simple admin view so project members can add or edit games
-        without touching the database directly (planned for later snapshots).
+  \item Allow the user to mark \textbf{teams} as favorites and show a
+        \textbf{My Favorites} view with upcoming games involving those teams.
+  \item Provide a simple admin view so project members can add or edit
+        teams and games without touching the database directly.
 \end{itemize}
 
 \section{Why this software matters}
 
 Many sports fans jump between different apps and websites to check schedules
 for different leagues. SportHub aims to collect multiple sports into a single
-view and let users focus on the games that matter most to them through the
-favorites feature. This makes it faster and easier to keep track of favorite
-teams and important matchups.
+view and let users focus on the games that matter most to them by following
+favorite teams. This reduces the time spent switching between sites and makes
+it easier to track all favorite matchups in one place.
 
 \section{Accessing SportHub}
 
-\subsection*{Requirements}
+\subsection{Requirements}
 
+\subsubsection*{For end users}
 \begin{itemize}
-  \item Modern web browser (Chrome, Firefox, Edge, etc.).
-  \item Local development environment with Node.js and Git (for running the
-        project on a laptop).
+  \item Modern web browser (Chrome, Firefox, Edge, Safari).
+  \item Stable internet connection (if running against a hosted instance).
 \end{itemize}
 
-\subsection*{GitHub Repository}
+\subsubsection*{For local development}
+\begin{itemize}
+  \item Git installed.
+  \item Docker and Docker Compose (e.g., Docker Desktop).
+  \item Optionally Node.js and npm (if running frontend/backend without Docker).
+\end{itemize}
 
-The source code and documentation are stored in the GitHub repository:
+\subsection{GitHub Repository}
+
+The source code and documentation are stored in GitHub:
 
 \begin{itemize}
   \item GitHub: \url{https://github.com/uchiha1121/cs3338-final-sportapp}
 \end{itemize}
 
-\subsection*{Jira Link}
+\subsection{Jira Link}
 
-Project tasks and sprints will be tracked in Jira:
+Project tasks, sprint planning, and bugs are tracked using Jira:
 
 \begin{itemize}
-  \item Jira board: \texttt{TBD -- Jira project not created yet. The link will
-        be added in a later snapshot.}
+  \item Jira board:
+        \url{https://calstatela-team4.atlassian.net/jira/software/projects/ST/boards/68?sprintStarted=true}
 \end{itemize}
 
-\subsection*{How to run the project (development)}
+\subsection{How to run the project with Docker}
 
-During early snapshots the project is still under development, but the
-general steps to run it locally are:
+To run SportHub locally using Docker:
 
 \begin{enumerate}
   \item Clone the GitHub repository:
         \begin{verbatim}
-        git clone https://github.com/uchiha1121/cs3338-final-sportapp.git
+git clone https://github.com/uchiha1121/cs3338-final-sportapp.git
+cd cs3338-final-sportapp
         \end{verbatim}
-  \item Set up the backend (Node/Express) in the \texttt{backend} folder.
-  \item Set up the frontend in the \texttt{frontend} folder.
-  \item In later snapshots, start all services together using
-        \texttt{docker-compose up}.
+  \item Make sure Docker Desktop (or Docker engine) is running.
+  \item Start all services with Docker Compose:
+        \begin{verbatim}
+docker-compose up --build
+        \end{verbatim}
+  \item After the containers start, open a browser and go to:
+        \begin{quote}
+          \texttt{http://localhost:3000}
+        \end{quote}
+        or the port configured for the frontend in \texttt{docker-compose.yml}.
 \end{enumerate}
 
-When fully set up, the user will open a browser and navigate to the
-frontend URL (for example \texttt{http://localhost:3000}) to use SportHub.
+To stop the application, press \texttt{Ctrl + C} in the terminal where
+\texttt{docker-compose} is running, then optionally run:
+
+\begin{verbatim}
+docker-compose down
+\end{verbatim}
+
+\section{Navigation Overview}
+
+\subsection{Top navigation bar}
+
+All pages share a top navigation bar with links such as:
+
+\begin{itemize}
+  \item \textbf{SportHub} -- logo or text that returns to the Home page.
+  \item \textbf{All Games} -- view all upcoming games with filters.
+  \item \textbf{Teams} -- browse teams and select favorites.
+  \item \textbf{My Favorites} -- view upcoming games involving favorite teams
+        (shown only when logged in).
+  \item \textbf{Admin} -- admin tools for managing teams and games
+        (shown only for admin users).
+  \item \textbf{Login / Logout} -- sign in or sign out.
+\end{itemize}
+
+\subsection{Main pages}
+
+The main pages of SportHub are:
+\begin{itemize}
+  \item \textbf{Home} -- landing page that introduces SportHub and links to
+        All Games, Teams, and My Favorites.
+  \item \textbf{All Games} -- list of games with filters for sport and date.
+  \item \textbf{Teams} -- list of teams by sport with favorite controls.
+  \item \textbf{My Favorites} -- personalized schedule of games for favorite teams.
+  \item \textbf{Admin} -- screens for managing teams and games (admin only).
+  \item \textbf{Login / Register} -- authentication pages for users.
+\end{itemize}
 
 \section{Using SportHub}
 
-\subsection*{Navigation}
+\subsection{Home Page}
 
-All pages share a top navigation bar with links:
-
-\begin{itemize}
-  \item \textbf{All Games} -- main page showing upcoming games.
-  \item \textbf{My Favorites} -- page showing only favorited games
-        (planned for later snapshots).
-  \item \textbf{Admin} -- page for managing games (planned for later snapshots).
-\end{itemize}
-
-\subsection*{All Games Page}
+When you first open SportHub, you typically see the Home page.
 
 \begin{itemize}
-  \item Shows a table or list of games with sport, home team, away team,
-        date, and time.
-  \item Contains a filter control (such as a dropdown) to limit games by sport.
-  \item In later snapshots, includes a favorite icon/button to mark a game as
-        a favorite.
+  \item Read the short description of what the app does.
+  \item Use buttons or links on this page to go to All Games, Teams, or
+        My Favorites.
 \end{itemize}
 
-\subsection*{My Favorites Page (planned)}
+\subsection{Viewing Games (All Games Page)}
+
+\begin{enumerate}
+  \item Click \textbf{All Games} in the navigation bar.
+  \item Use the \textbf{sport filter} (e.g., All, NBA, NFL, Soccer, MLB) to choose
+        the sport you care about.
+  \item Use the \textbf{date filter} or date picker (if provided) to select a day.
+  \item Browse the list of games:
+        \begin{itemize}
+          \item Each entry shows sport, home team, away team, date, time, and status.
+          \item Click the \textbf{Details} button or link (if available) to
+                open the Game Details page.
+        \end{itemize}
+\end{enumerate}
+
+If no games match your filters, SportHub shows a message like
+``No games available for this selection.''
+
+\subsection{Browsing Teams and Adding Favorites (Teams Page)}
+
+\begin{enumerate}
+  \item Click \textbf{Teams} in the navigation bar.
+  \item Use the sport filter or tabs to narrow the list to a specific league.
+  \item Look through the list of teams and find the ones you care about.
+  \item If you are logged in, click the \textbf{favorite star or toggle}
+        on a team card to mark it as a favorite.
+  \item Click the favorite control again to remove a team from favorites.
+\end{enumerate}
+
+If you are not logged in, SportHub may show a message like
+``Log in to save favorite teams'' when you try to use the favorite button.
+
+\subsection{Viewing Favorite Teams and Games (My Favorites Page)}
+
+\begin{enumerate}
+  \item Make sure you are logged in (see Section~\ref{subsec:login}).
+  \item Click \textbf{My Favorites} in the navigation bar.
+  \item At the top, you may see a summary of your favorite teams.
+  \item Below, you will see upcoming games that involve any of your favorite teams.
+  \item If you no longer want to follow a team, use the unfavorite control on
+        the Teams page or from any favorite summary (if available).
+\end{enumerate}
+
+If you have no favorite teams, SportHub shows a message like:
+``You have no favorite teams yet. Go to the Teams page to add some.''
+
+\subsection{Game Details Page}
+
+When you click a specific game on the All Games or My Favorites page, the
+Game Details page opens.
 
 \begin{itemize}
-  \item Shows only the games that the user has marked as favorites.
-  \item Allows the user to remove a game from favorites.
+  \item You will see a header showing the two teams and the league/sport.
+  \item Details include game date, time, location, and status.
+  \item If scores are recorded, they may be shown as home and away scores;
+        otherwise, the score fields may show ``TBD'' or be blank.
+  \item Use the back button or navigation links to return to the previous page.
 \end{itemize}
 
-\subsection*{Admin Page (planned)}
+\subsection{Logging In and Registering}
+\label{subsec:login}
+
+\subsubsection*{Registering an Account}
+\begin{enumerate}
+  \item Click \textbf{Register} (or a sign-up link near the Login form).
+  \item Enter your email/username and password (and confirm the password, if required).
+  \item Submit the form.
+  \item If the registration is successful, you may be redirected to the Login page
+        or logged in automatically, depending on the implementation.
+\end{enumerate}
+
+\subsubsection*{Logging In}
+\begin{enumerate}
+  \item Click \textbf{Login} in the navigation bar.
+  \item Enter your email/username and password.
+  \item Click the \textbf{Login} button.
+  \item On success, the navigation bar should update (for example, showing
+        My Favorites and Logout).
+\end{enumerate}
+
+If your credentials are invalid, you should see an error message. Double-check
+your information and try again.
+
+\subsection{Admin Features (Admin Page)}
+
+If your user account has admin permissions, you will see an
+\textbf{Admin} link in the navigation bar.
 
 \begin{itemize}
-  \item Allows project members to create, edit, or delete games.
-  \item Includes a form with fields for sport, teams, date, and time.
+  \item Click \textbf{Admin} to access admin tools.
+  \item Use the Teams management section to add, edit, or delete teams.
+  \item Use the Games management section to add, edit, or delete games.
+  \item Always click \textbf{Save} or \textbf{Update} to apply changes.
 \end{itemize}
 
-\section{Current Status (Checkpoint 2)}
+These tools are primarily for project developers or the instructor and
+are not required for normal fan usage.
 
-As of Snapshot 3 (Checkpoint 2), the focus is on finishing the
-\textbf{Favorites} experience. The All Games view retains sport filters
-(All, NBA, NFL, MLB, Soccer) and now includes a favorite toggle. A simple
-\textbf{My Favorites} view shows the games the user marked, stored on the
-frontend for now while backend persistence is designed. Admin features remain
-planned for later snapshots. TestRail coverage now includes favorite/unfavorite
-and viewing the favorites list (results captured in the Snapshot 3 report).
+\section{Troubleshooting}
 
-\subsection*{Jira Link}
+\subsection*{The site does not load}
+\begin{itemize}
+  \item Make sure Docker containers are running (if using Docker).
+  \item Check that you are using the correct URL (e.g., \texttt{http://localhost:3000}).
+  \item Try refreshing the browser or using a different browser.
+\end{itemize}
 
-Project tasks and sprints are tracked in Jira:
+\subsection*{No games are showing}
+\begin{itemize}
+  \item Check the filters on the All Games page (sport and date).
+  \item If running locally, verify that the database has been seeded with teams and games.
+\end{itemize}
+
+\subsection*{I cannot favorite teams}
+\begin{itemize}
+  \item Make sure you are logged in.
+  \item If the favorite button is disabled or shows an error, check for any
+        on-screen message explaining the issue.
+\end{itemize}
+
+\subsection*{I forgot my password}
+\begin{itemize}
+  \item In this class project version, a full password reset system may not be implemented.
+  \item Contact the project team or reset the database if necessary.
+\end{itemize}
+
+\section{Support and Contact}
+
+If you need help with SportHub or find a bug:
 
 \begin{itemize}
-  \item Jira board: \url{https://calstatela-team4.atlassian.net/jira/software/projects/ST/boards/68?sprintStarted=true}
+  \item Check the GitHub README for setup updates:
+        \url{https://github.com/uchiha1121/cs3338-final-sportapp}
+  \item Create an issue in the GitHub repository.
+  \item Talk to the CS3338 instructor or a team member during class or lab time.
 \end{itemize}
-
 
 \end{document}
-
