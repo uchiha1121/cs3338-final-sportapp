@@ -72,6 +72,8 @@
 \hline
 0.2 & 2025-12-10 & Team 4 & Snapshot 3 update: Favorites prototype planned, backend/API design in progress \\
 \hline
+0.3 & 2025-01-20 & Team 4 & Snapshot 4 update: filters validated, Favorites polished, admin CRUD outlined; future work captured \\
+\hline
 \end{longtable}
 
 \newpage
@@ -168,12 +170,29 @@ At a high level, SportHub will provide the following functionality:
     \item Provide administrative functionality to manage teams and game records (planned for later snapshots).
 \end{itemize}
 
+\subsubsection*{Snapshot 4 Scope Confirmation}
+\begin{itemize}
+    \item All Games filters (sport/date) operate on seeded data and were validated via TestRail case C50.
+    \item Favorites remain frontend-persisted but cover toggle, session persistence, and ``My Favorites'' listing (C51--C52).
+    \item Admin CRUD is represented by a happy-path flow (C53) for the final demo; full persistence and auth are future work.
+    \item Docker-based local run remains the primary evaluation path for the final snapshot.
+\end{itemize}
+
 \subsection{Snapshot 3 Updates}
 \begin{itemize}
     \item Focus on the \textbf{Favorites} flow: letting a fan mark games/teams as favorites and view them on a ``My Favorites'' page.
     \item Maintain the All Games filters while adding UI affordances (star/button) to toggle favorites on each game card.
     \item Begin wiring the Favorites API design (planned endpoints: \texttt{/api/favorites}, \texttt{/api/favorites/games}) and interim frontend storage while backend persistence is finalized.
     \item Update TestRail coverage to include favorite/unfavorite and My Favorites view; results to be captured in the Snapshot 3 TestRail report.
+\end{itemize}
+
+\subsection{Snapshot 4 Updates}
+\begin{itemize}
+    \item Validated All Games filters (C50) and Favorites UX (C51, C52) in TestRail; added admin CRUD happy-path coverage (C53) for demo readiness.
+    \item Polished frontend interactions and fixed mock data issues so filters and favorites behave consistently for the final presentation.
+    \item Updated SRS, SDD, design spec, user manual, workflow notes, and README to reflect the final feature set and run instructions.
+    \item Jira close-out for ST-21 (regression), ST-22 (frontend polish), and ST-23 (workflow updates); backlog items for favorites and filters resolved.
+    \item Future work documented: live data APIs, persistent favorites/auth, richer admin UI, notifications, and CI/CD automation.
 \end{itemize}
 
 \subsection{User Classes and Characteristics}
@@ -208,6 +227,14 @@ At a high level, SportHub will provide the following functionality:
     \item All team members have access to GitHub, Jira, TestRail, Docker, and LaTeX tooling.
     \item The course infrastructure and grading expectations remain consistent throughout the semester.
     \item Runtime stack for snapshots: Node.js 20 with Express and CORS middleware for the mock API; nginx container for serving the static frontend; simple client-side storage for favorites until backend persistence is ready.
+\end{itemize}
+
+\subsection{Future Work (Post--Snapshot 4)}
+\begin{itemize}
+    \item Integrate live sports APIs and background refresh of schedules.
+    \item Add authentication/authorization and database-backed favorites plus role-based admin.
+    \item Provide notifications (email/web push) for upcoming games of favorite teams and richer game details.
+    \item Automate CI/CD with linting, tests, and Docker image publishing.
 \end{itemize}
 
 \newpage

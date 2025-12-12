@@ -29,7 +29,7 @@ SportHub: Multi-Sport Scores \& Favorites Tracker}
 \hline
 0.3 & 2025-12-10 & Snapshot 3: Favorites flow design, API planning, updated UI notes. \\
 \hline
-1.0 & 2025-12-11 & Snapshot 4: Final version; polished favorites and filters, updated containers and documentation. \\
+1.0 & 2025-01-20 & Snapshot 4: Final version; polished favorites and filters, updated containers, workflow, and documentation. \\
 \hline
 \end{longtable}
 \newpage
@@ -150,10 +150,18 @@ A typical workflow for a fan user looks like this:
 
 \subsection{Snapshot 4 Final Notes}
 \begin{itemize}
-  \item Polished navigation and styling so that all pages share the same layout and header.
-  \item Verified the favorites flow (add/remove favorites, view My Favorites) and updated TestRail coverage for the final run.
-  \item Finalized the Docker configuration so frontend and backend can be started together via \texttt{docker-compose}.
-  \item Updated all project documents (SDD, SRS, user manual, design spec, snapshot objectives) to match the final system.
+  \item Polished navigation and styling so that all pages share the same layout and header; fixed mock data issue in the demo build.
+  \item Verified the favorites flow (add/remove favorites, view My Favorites) and updated TestRail coverage (C50--C53) for the final run.
+  \item Finalized the Docker configuration so frontend and backend can be started together via \texttt{docker-compose}; README and workflow updated accordingly.
+  \item Updated all project documents (SDD, SRS, user manual, design spec, snapshot objectives) to match the final system and to capture future work.
+\end{itemize}
+
+\subsection{Post--Snapshot 4 Future Work}
+\begin{itemize}
+  \item Replace mock data with live sports APIs and scheduled refresh jobs.
+  \item Add authentication/authorization, database-backed favorites, and role-based admin controls.
+  \item Extend admin UI with validations and bulk actions; add notifications for favorite teams' upcoming games.
+  \item Add automated CI/CD (lint/test) and publish Docker images to a registry.
 \end{itemize}
 
 \subsection{Site Breakdown}

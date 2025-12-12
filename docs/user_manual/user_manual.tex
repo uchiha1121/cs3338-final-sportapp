@@ -48,7 +48,7 @@ The main objectives of SportHub are:
   \item Allow the user to filter games by sport and date.
   \item Allow the user to mark \textbf{teams} as favorites and show a
         \textbf{My Favorites} view with upcoming games involving those teams.
-  \item Provide a simple admin view so project members can add or edit
+  \item Provide a simple admin view so project members can add, edit, or remove
         teams and games without touching the database directly.
 \end{itemize}
 
@@ -255,13 +255,21 @@ If your user account has admin permissions, you will see an
 
 \begin{itemize}
   \item Click \textbf{Admin} to access admin tools.
-  \item Use the Teams management section to add, edit, or delete teams.
-  \item Use the Games management section to add, edit, or delete games.
-  \item Always click \textbf{Save} or \textbf{Update} to apply changes.
+  \item Use the Teams management section to add, edit, or delete teams (supply name, sport, and optional logo/city).
+  \item Use the Games management section to add, edit, or delete games (sport, home, away, date, time).
+  \item Always click \textbf{Save} or \textbf{Update} to apply changes and refresh the list to verify updates.
+  \item For Snapshot 4, the admin flow is demonstrated with seeded data; database-backed persistence and auth are planned future work.
 \end{itemize}
 
 These tools are primarily for project developers or the instructor and
 are not required for normal fan usage.
+
+\section{Snapshot 4 Notes and Future Work}
+\begin{itemize}
+  \item Final regression covered: All Games filter (C50), Favorite toggle (C51), My Favorites view (C52), and Admin CRUD happy path (C53).
+  \item Favorites persist on the frontend for the demo; moving favorites and auth to the backend is the next step.
+  \item Planned improvements: live sports APIs, notifications for upcoming games of favorite teams, stronger admin validation, and CI/CD automation.
+\end{itemize}
 
 \section{Troubleshooting}
 

@@ -1,0 +1,53 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{longtable}
+
+\title{TestRail Report -- Snapshot 4 Wrap Up}
+\author{Team 4}
+\date{2025-01-20}
+
+\begin{document}
+
+\maketitle
+
+\section*{Overview}
+Snapshot 4 focused on polishing All Games filters, finalizing the Favorites
+experience, demonstrating a simple Admin CRUD flow, and closing out the sprint
+with TestRail evidence (suite: ``Snapshot 4 wrap up''). All cases below were
+executed on the seeded demo build (frontend + backend via \texttt{docker-compose}).
+
+\section*{Test Cases Executed}
+\begin{longtable}{|p{1.5cm}|p{10cm}|p{2cm}|}
+\hline
+\textbf{ID} & \textbf{Title / Notes} & \textbf{Result} \\
+\hline
+C50 & All Games filter: select NBA, list shows only NBA games; reset to All shows all sports. & Pass \\
+\hline
+C51 & Favorite toggle: clicking star on a game marks it favorite (star stays filled on reload) and adds to My Favorites. & Pass \\
+\hline
+C52 & My Favorites view: shows only favorited teams’ upcoming games; unfavoriting removes them from the view immediately. & Pass \\
+\hline
+C53 & Admin game CRUD (happy path): add a game with valid fields, edit date/time, delete it; list updates and no stale entries remain. & Pass \\
+\hline
+\end{longtable}
+
+\section*{Regression Coverage}
+Prior suites from Snapshot 2 (filters) and Snapshot 3 (favorites) were spot-checked
+on the same build to ensure no regressions. No new defects were logged.
+
+\section*{Environment}
+\begin{itemize}
+  \item Frontend: demo build served on port 3000 (seeded data).
+  \item Backend: Express mock API on port 4000 via \texttt{docker-compose}.
+  \item Data: seeded games list; favorites stored on frontend for demo.
+\end{itemize}
+
+\section*{Follow-Ups / Future Work}
+\begin{itemize}
+  \item Add automated test execution (CI) and backend-persisted favorites once auth/DB are enabled.
+  \item Integrate live sports data API to replace seeded schedule.
+  \item Expand admin coverage with validation/negative cases once persistence is in place.
+\end{itemize}
+
+\end{document}

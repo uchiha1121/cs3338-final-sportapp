@@ -109,7 +109,7 @@ SportHub:
   - `design_spec.tex` – Design Specification  
   - `snapshot_objectives.tex` – Snapshot goals and reflections
 - `testrail/`
-  - Snapshot 2, 3, and 4 test run reports (PDF exports from TestRail)
+  - Snapshot 2, 3, and 4 test run reports (PDF/TeX exports from TestRail)
 - `jira/`
   - Screenshots/exports of the Jira board, backlog, and sprint
 - `docker-compose.yml`
@@ -134,5 +134,4 @@ SportHub:
    ```bash
    git clone https://github.com/uchiha1121/cs3338-final-sportapp.git
    cd cs3338-final-sportapp
-
 

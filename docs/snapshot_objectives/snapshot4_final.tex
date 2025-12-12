@@ -7,6 +7,8 @@
 
 For Snapshot 4 (original due date), our goal is to finish SportHub,
 clean up the project, and reflect on future work.
+This snapshot bundles three areas: feature polish, validation (TestRail/Jira),
+and documentation alignment (SRS, SDD, user manual, design spec, workflow).
 
 \subsection*{Goals}
 \begin{itemize}
@@ -20,6 +22,43 @@ clean up the project, and reflect on future work.
         (more sports, live score APIs, authentication, etc.).
   \item Make sure the Docker setup runs the full system and the README
         explains how to start the app.
+\end{itemize}
+
+\subsection*{Completed for Snapshot 4}
+\begin{itemize}
+  \item Final TestRail run: added ``Snapshot 4 wrap up'' suite with C50--C53
+        (All Games filter, Favorite toggle, My Favorites view, Admin CRUD) and
+        executed regression across Snapshot 2 and 3 suites.
+  \item Jira close-out: finalized sprint items (ST-21, ST-22, ST-23) covering
+        regression, frontend polish, and workflow updates; backlog items for
+        Favorites and All Games are closed or archived.
+  \item Documentation refreshed: SRS/SDD updated for the final scope, design
+        spec and user manual aligned to Favorites + admin CRUD, workflow notes
+        updated for Snapshot 4 run steps and Docker usage.
+  \item Frontend polish: fixed mock data syntax error, confirmed filters and
+        Favorites interactions for the demo build.
+\end{itemize}
+
+\subsection*{Future Work (Post–Snapshot 4)}
+\begin{itemize}
+  \item Integrate a live sports data API (e.g., NBA/NFL/Soccer) and move off
+        seeded data; add cron/queue for refreshing schedules.
+  \item Add real authentication and persistence for favorites (DB-backed) plus
+        role-based admin access.
+  \item Notifications/alerts for upcoming games of favorite teams (email/web
+        push) and simple box-score details on the Game Details page.
+  \item CI/CD hardening: automated tests in pipeline, lint/format, and Docker
+        image publishing to a registry.
+\end{itemize}
+
+\subsection*{Reflection}
+\begin{itemize}
+  \item What went well: the multi-sport view, favorites UX, and Docker setup
+        delivered a consistent demo; documentation stayed current each snapshot.
+  \item What slipped: persistent favorites, live data APIs, and richer admin UX
+        were deferred for time; testing remained mostly manual via TestRail.
+  \item Risks mitigated: clarified future work and kept backlog visible in Jira;
+        included TestRail evidence (cases C50--C53) for the final run.
 \end{itemize}
 
 \end{document}

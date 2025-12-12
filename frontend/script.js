@@ -34,7 +34,7 @@ const allGames = [
     away: "Bulls",
     date: "2025-01-11",
     time: "18:30"
-  }
+  },
   {
     id: 5,
     sport: "SOCCER",
