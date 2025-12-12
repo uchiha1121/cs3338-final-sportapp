@@ -301,4 +301,13 @@ games without directly editing the database.
   \item Future work: live sports data integration, database-backed favorites with authentication, richer game details, notifications, and CI/CD automation.
 \end{itemize}
 
+\section{Dependencies and Container Inputs}
+\begin{itemize}
+  \item \textbf{Backend (Node/Express)}: Node.js 20, \texttt{express} \^{ }4.19.2, \texttt{cors} \^{ }2.8.5. Entry: \texttt{backend/index.js} served on port 4000.
+  \item \textbf{Frontend (demo)}: static HTML/JS served via simple HTTP server (Node 20) or container; seeded data in \texttt{frontend/script.js}. Port 3000 in Docker Compose.
+  \item \textbf{Docker/Compose}: \texttt{docker-compose.yml} orchestrates frontend, backend, and Postgres placeholder (future persistence). Backend Dockerfile uses official Node base image; frontend can be served via nginx or Node.
+  \item \textbf{Build tools}: Docker \& Docker Compose required; LaTeX for docs (\texttt{latexmk} or \texttt{pdflatex}) if regenerating PDFs.
+  \item \textbf{Optional/future runtime}: PostgreSQL for persistent teams/games/favorites once the DB-backed flow is enabled; authentication middleware and sports API client to be added in post-snapshot work.
+\end{itemize}
+
 \end{document}
